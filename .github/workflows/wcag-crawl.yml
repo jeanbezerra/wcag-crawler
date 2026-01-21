@@ -8,26 +8,21 @@ on:
         required: true
         type: string
       script:
-        description: "Script a executar (wcag-crawler-v2.js ou wcag-crawler.js)"
-        required: false
+        description: "Script WCAG a executar"
+        required: true
         default: "wcag-crawler-v2.js"
         type: choice
         options:
-          - "wcag-crawler-v2.js"
-          - "wcag-crawler.js"
+          - wcag-crawler-v2.js
+          - wcag-crawler.js
 
 jobs:
-  run-wcag-crawler:
+  wcag:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
-    defaults:
-      run:
-        shell: bash
-        working-directory: wcag-crawler
-
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -36,51 +31,23 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Run WCAG crawler
-        env:
-          SITE_URL: ${{ inputs.site_url }}
-          SCRIPT_FILE: ${{ inputs.script }}
         run: |
-          set -euo pipefail
+          echo "Site: ${{ inputs.site_url }}"
+          echo "Script: ${{ inputs.script }}"
+          node ${{ inputs.script }} "${{ inputs.site_url }}"
 
-          echo "Running WCAG crawler..."
-          echo "Site: ${SITE_URL}"
-          echo "Script: ${SCRIPT_FILE}"
-
-          if [[ ! -f "${SCRIPT_FILE}" ]]; then
-            echo "ERROR: Script not found: ${SCRIPT_FILE}"
-            ls -la
-            exit 1
-          fi
-
-          # Executa passando a URL como argumento.
-          # (assume que o seu script lê process.argv[2])
-          node "${SCRIPT_FILE}" "${SITE_URL}"
-
-      - name: Collect outputs
+      - name: Collect artifacts
         run: |
-          set -euo pipefail
-          mkdir -p ../artifacts
+          mkdir -p artifacts
+          cp -f *.html artifacts/ 2>/dev/null || true
+          cp -f *.txt artifacts/ 2>/dev/null || true
+          cp -f *.json artifacts/ 2>/dev/null || true
 
-          # Ajuste conforme os arquivos que seu crawler realmente gera
-          # (mantive "best effort" sem falhar se algum não existir)
-          cp -f urls-discovered.txt ../artifacts/ 2>/dev/null || true
-          cp -f wcag-dashboard.html ../artifacts/ 2>/dev/null || true
-          cp -f wcag-dashboard-yaman-light.html ../artifacts/ 2>/dev/null || true
-          cp -f wcag-report.html ../artifacts/ 2>/dev/null || true
-
-          # Se o projeto gerar JSON/CSV/etc, capture aqui também:
-          find . -maxdepth 2 -type f \( -name "*.json" -o -name "*.csv" -o -name "*.html" -o -name "*.txt" \) \
-            -print -exec cp -f {} ../artifacts/ \; 2>/dev/null || true
-
-          echo "Artifacts collected:"
-          ls -la ../artifacts
-
-      - name: Upload artifacts
+      - name: Upload results
         uses: actions/upload-artifact@v4
         with:
-          name: wcag-crawler-results
-          path: artifacts
-          if-no-files-found: warn
+          name: wcag-results
+          path: artifact
