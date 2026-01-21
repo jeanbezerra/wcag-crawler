@@ -3,11 +3,47 @@ import fs from 'fs';
 import { URL } from 'url';
 import axeSource from 'axe-core';
 
+// =========================
+// Entrada: Pipeline Param
+// =========================
+// Prioridade:
+// 1) CLI: node wcag-crawler-v2.js https://example.com
+// 2) ENV: SITE_URL=https://example.com
+// 3) fallback (opcional)
+const inputUrl = process.argv[2] || process.env.SITE_URL || 'https://jeanbezerra.com';
+
+function normalizeUrl(raw) {
+  if (!raw || typeof raw !== 'string') return null;
+
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+
+  // Aceita "example.com" e força https://
+  const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+
+  try {
+    const u = new URL(withProtocol);
+    // Normaliza: remove fragmento e garante / no final do path se vazio
+    u.hash = '';
+    if (!u.pathname) u.pathname = '/';
+    return u.toString();
+  } catch {
+    return null;
+  }
+}
+
+const START_URL = normalizeUrl(inputUrl);
+
+if (!START_URL) {
+  console.error(`❌ URL inválida. Use: node wcag-crawler-v2.js https://site.com (ou defina SITE_URL).`);
+  process.exit(1);
+}
+
 // Configurações
-const START_URL = 'https://www.unimedbh.com.br/';
 const MAX_DEPTH = 1;
 const MAX_CONCURRENCY = 3; // número máximo de abas simultâneas
 const DELAY_MS = 500;
+
 const visited = new Set();
 const reports = [];
 
@@ -25,7 +61,7 @@ async function runWithConcurrency(tasks, maxConcurrent) {
         try {
           results.push(await task());
         } catch (err) {
-          console.error(`⚠️ Erro em tarefa: ${err.message}`);
+          console.error(`⚠️ Erro em tarefa: ${err?.message || err}`);
         }
       }
     }
@@ -48,6 +84,8 @@ async function auditPage(browser, url, depth, baseDomain) {
 
   try {
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+
+    // Injeta axe-core
     await page.addScriptTag({ content: axeSource.source });
 
     const results = await page.evaluate(async () => await axe.run(document));
@@ -55,25 +93,31 @@ async function auditPage(browser, url, depth, baseDomain) {
 
     // Captura links internos
     const links = await page.$$eval('a[href]', as =>
-      as.map(a => a.href).filter(h => h.startsWith('http'))
+      as.map(a => a.href).filter(h => h && h.startsWith('http'))
     );
-    const internalLinks = links.filter(
-      link => new URL(link).hostname === baseDomain
-    );
+
+    const internalLinks = links.filter(link => {
+      try {
+        return new URL(link).hostname === baseDomain;
+      } catch {
+        return false;
+      }
+    });
 
     await page.close();
 
     const uniqueLinks = [...new Set(internalLinks)];
-    const nextTasks = uniqueLinks.map(
-      link => async () => {
-        await new Promise(r => setTimeout(r, DELAY_MS));
-        await auditPage(browser, link, depth + 1, baseDomain);
-      }
-    );
+    const nextTasks = uniqueLinks.map(link => async () => {
+      await new Promise(r => setTimeout(r, DELAY_MS));
+      await auditPage(browser, link, depth + 1, baseDomain);
+    });
+
     await runWithConcurrency(nextTasks, MAX_CONCURRENCY);
   } catch (err) {
-    console.error(`❌ Erro em ${url}: ${err.message}`);
-    await page.close();
+    console.error(`❌ Erro em ${url}: ${err?.message || err}`);
+    try {
+      await page.close();
+    } catch {}
   }
 }
 
@@ -81,12 +125,12 @@ async function auditPage(browser, url, depth, baseDomain) {
  * Geração do relatório visual
  */
 function generateHtmlReport() {
-  const totalPages = reports.length;
-  const totalViolations = reports.reduce((sum, r) => sum + r.violations.length, 0);
-  const impactCount = {};
+  const totalPages = reports.length || 0;
+  const totalViolations = reports.reduce((sum, r) => sum + (r.violations?.length || 0), 0);
 
+  const impactCount = {};
   for (const r of reports) {
-    for (const v of r.violations) {
+    for (const v of (r.violations || [])) {
       const impact = v.impact || 'unknown';
       impactCount[impact] = (impactCount[impact] || 0) + 1;
     }
@@ -97,7 +141,7 @@ function generateHtmlReport() {
 
   const rows = reports.map(r => `
     <tr>
-      <td><a href="${r.url}" target="_blank">${r.url}</a></td>
+      <td><a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.url}</a></td>
       <td>${r.violations.length}</td>
       <td>
         ${r.violations.map(v => `
@@ -112,6 +156,8 @@ function generateHtmlReport() {
           </div>`).join('')}
       </td>
     </tr>`).join('');
+
+  const avg = totalPages > 0 ? (totalViolations / totalPages).toFixed(1) : '0.0';
 
   const html = `
   <!DOCTYPE html>
@@ -131,7 +177,8 @@ function generateHtmlReport() {
   </head>
   <body>
     <div class="container-fluid">
-      <h1 class="mb-4">Relatório de Acessibilidade - WCAG 2.1 AA</h1>
+      <h1 class="mb-2">Relatório de Acessibilidade - WCAG 2.1 AA</h1>
+      <div class="text-muted mb-4">URL inicial: <a href="${START_URL}" target="_blank" rel="noopener noreferrer">${START_URL}</a></div>
 
       <div class="row mb-4 text-center">
         <div class="col-md-4">
@@ -149,7 +196,7 @@ function generateHtmlReport() {
         <div class="col-md-4">
           <div class="card shadow-sm p-3">
             <div class="text-secondary">Média por Página</div>
-            <div class="big-number text-warning">${(totalViolations / totalPages).toFixed(1)}</div>
+            <div class="big-number text-warning">${avg}</div>
           </div>
         </div>
       </div>
@@ -212,8 +259,15 @@ function generateHtmlReport() {
 (async () => {
   console.log(`🚀 Iniciando auditoria WCAG em ${START_URL}`);
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+
   const domain = new URL(START_URL).hostname;
+
   await auditPage(browser, START_URL, 0, domain);
+
   await browser.close();
+
   generateHtmlReport();
+
+  // Opcional: falhar pipeline se houver violações
+  // if (reports.some(r => (r.violations || []).length > 0)) process.exit(2);
 })();
