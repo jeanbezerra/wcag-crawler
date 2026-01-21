@@ -1,0 +1,551 @@
+
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yaman - WCAG Consolidado</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body { background: #f8f9fa; font-family: 'Inter', sans-serif; }
+      .nav-tabs .nav-link.active {
+        background: #63398E; color: #fff; font-weight: 600;
+      }
+      .nav-tabs .nav-link { color: #63398E; font-weight: 600; }
+      iframe { width: 100%; height: 85vh; border: none; border-radius: 0 0 10px 10px; background: #fff; }
+      .brand-divider { height: 4px; background: linear-gradient(90deg, #301E46, #63398E, #8031B5, #DFE33D); border-radius: 999px; }
+      .print-btn { position: fixed; top: 10px; right: 10px; z-index: 99; }
+      @media print {
+        .no-print { display:none !important; }
+        iframe { height: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="no-print">
+      <button class="btn btn-outline-dark btn-sm print-btn" onclick="window.print()">🖨️ Imprimir</button>
+    </div>
+
+    <div class="container-fluid mt-3">
+      <h1 class="fw-bold text-dark mb-2">Yaman - WCAG Automation</h1>
+      <div class="brand-divider mb-3"></div>
+
+      <!-- Abas -->
+      <ul class="nav nav-tabs" id="wcagTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="tab-dashboard" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab">📊 Dashboard Consolidado</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-report" data-bs-toggle="tab" data-bs-target="#report" type="button" role="tab">📋 Relatório Técnico</button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="wcagTabsContent">
+        <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
+          <iframe srcdoc="<!DOCTYPE html>
+<html lang=&quot;pt-BR&quot;>
+<head>
+  <meta charset=&quot;utf-8&quot; />
+  <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; />
+  <title>Yaman - WCAG Automation</title>
+
+  <!-- Google Fonts -->
+  <link href=&quot;https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap&quot; rel=&quot;stylesheet&quot;>
+  <!-- Bootstrap 5 -->
+  <link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;>
+  <!-- Chart.js -->
+  <script src=&quot;https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js&quot;></script>
+
+  <style>
+    :root {
+      /* Yaman brand */
+      --y-yellow: #DFE33D;
+      --y-dark-purple: #301E46;
+      --y-purple: #63398E;
+      --y-light-purple: #8031B5;
+      --y-gray: #7D7D7D;
+
+      /* Light theme neutrals */
+      --bg: #F5F4F8;
+      --card: #FFFFFF;
+      --muted: #60646C;
+      --border: #E6E3ED;
+      --heading: #2A213B;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: #222;
+      font-family: &quot;Inter&quot;, system-ui, -apple-system, Segoe UI, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, sans-serif;
+    }
+    .page { max-width: 1100px; margin: 36px auto; padding: 0 18px; }
+
+    .report-title { font-weight: 800; color: var(--heading); letter-spacing: .2px; }
+    .subtitle-chip { background: var(--y-yellow); color: #000; border: 1px solid var(--border); }
+    .badge-tag { background: var(--y-purple); color: #fff; border: none; }
+
+    .section-title { color: var(--y-dark-purple); font-weight: 800; margin: 26px 0 12px; }
+    .subtle { color: var(--muted); }
+
+    .card-soft { background: var(--card); border: 1px solid var(--border); border-radius: 16px; }
+    .bn-card { padding: 20px; }
+    .bn { font-size: clamp(28px, 5vw, 46px); font-weight: 800; color: var(--y-dark-purple); line-height: 1; }
+    .bn-label { color: var(--muted); font-weight: 600; }
+
+    .kpi-pill { font-weight:700; padding:.25rem .5rem; border-radius: 999px; background: #fbfbfd; border:1px solid var(--border) }
+    .list-check li::marker { color: var(--y-dark-purple); }
+
+    .brand-divider { height: 4px; background: linear-gradient(90deg, var(--y-dark-purple), var(--y-purple), var(--y-light-purple), var(--y-yellow)); border-radius: 999px; }
+
+    .print-btn { position: sticky; top: 12px; z-index: 9; }
+    @media print {
+      .no-print, .print-btn { display:none !important; }
+      body { background: #ffffff; color:#111827; }
+      .card-soft { border:1px solid #e5e7eb; }
+      .brand-divider { background: #000; height: 2px; }
+      a[href]:after { content: &quot;&quot;; } /* avoid printing URLs after links */
+    }
+  </style>
+</head>
+<body>
+  <div class=&quot;page&quot;>
+    <div class=&quot;d-flex align-items-start justify-content-between gap-3 mb-2&quot;>
+      <div>
+        <h1 class=&quot;report-title display-6 mb-2&quot;>Yaman - WCAG Automation</h1>
+        <div class=&quot;d-flex gap-2 flex-wrap&quot;>
+          <span class=&quot;badge rounded-pill badge-tag&quot;>Auditoria de Acessibilidade</span>
+          <span class=&quot;badge rounded-pill badge-tag&quot;>WCAG 2.2 AA</span>
+          <span class=&quot;badge rounded-pill badge-tag&quot;>Yaman Tecnologia</span>
+        </div>
+      </div>
+      <div class=&quot;no-print&quot;>
+        <button class=&quot;btn btn-outline-dark btn-sm print-btn&quot; onclick=&quot;window.print()&quot;>🖨️ Imprimir</button>
+      </div>
+    </div>
+    <div class=&quot;brand-divider mb-4&quot;></div>
+
+    <!-- TOPIC 1: Big Numbers resumo -->
+    <section class=&quot;mb-4&quot;>
+      <h2 class=&quot;section-title&quot;>1) Resumo Geral — Big Numbers</h2>
+      <p class=&quot;subtle&quot;>Indicadores consolidados do diagnóstico automatizado. Valores marcados como <span class=&quot;kpi-pill&quot;>Estimativa</span> devem ser validados na revisão manual.</p>
+      <div class=&quot;row g-3 mt-1&quot;>
+        <div class=&quot;col-12 col-sm-6 col-lg-3&quot;>
+          <div class=&quot;card-soft bn-card&quot;>
+            <div class=&quot;bn&quot;>143</div>
+            <div class=&quot;bn-label&quot;>Páginas auditadas</div>
+            <div class=&quot;subtle small mt-1&quot;>Fonte: Yaman - WCAG Automation</div>
+          </div>
+        </div>
+        <div class=&quot;col-12 col-sm-6 col-lg-3&quot;>
+          <div class=&quot;card-soft bn-card&quot;>
+            <div class=&quot;bn&quot;>1.200</div>
+            <div class=&quot;bn-label&quot;>Total de problemas <span class=&quot;kpi-pill&quot;>Estimativa</span></div>
+            <div class=&quot;subtle small mt-1&quot;>Média 8–10 por página</div>
+          </div>
+        </div>
+        <div class=&quot;col-12 col-sm-6 col-lg-3&quot;>
+          <div class=&quot;card-soft bn-card&quot;>
+            <div class=&quot;bn&quot;>65%</div>
+            <div class=&quot;bn-label&quot;>Conformidade atual <span class=&quot;kpi-pill&quot;>Estimativa</span></div>
+            <div class=&quot;subtle small mt-1&quot;>Nível AA</div>
+          </div>
+        </div>
+        <div class=&quot;col-12 col-sm-6 col-lg-3&quot;>
+          <div class=&quot;card-soft bn-card&quot;>
+            <div class=&quot;bn&quot;>92%</div>
+            <div class=&quot;bn-label&quot;>Páginas com falha de contraste</div>
+            <div class=&quot;subtle small mt-1&quot;>Critério 1.4.3</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPIC 2: Severidade e distribuição -->
+    <section class=&quot;mb-4&quot;>
+      <h2 class=&quot;section-title&quot;>2) Severidade e Distribuição</h2>
+      <div class=&quot;row g-3 align-items-stretch&quot;>
+        <div class=&quot;col-12 col-lg-6&quot;>
+          <div class=&quot;card-soft p-3 h-100&quot;>
+            <h3 class=&quot;h6 mb-3&quot;>Proporção por Severidade</h3>
+            <canvas id=&quot;severityChart&quot; height=&quot;190&quot; aria-label=&quot;Gráfico de severidade&quot; role=&quot;img&quot;></canvas>
+            <p class=&quot;subtle small mt-2&quot;>Critical (5%), Serious (60%), Moderate (25%), Minor (10%).</p>
+          </div>
+        </div>
+        <div class=&quot;col-12 col-lg-6&quot;>
+          <div class=&quot;card-soft p-3 h-100&quot;>
+            <h3 class=&quot;h6 mb-3&quot;>Principais categorias de erro</h3>
+            <ul class=&quot;mb-0&quot;>
+              <li><strong>Contraste insuficiente</strong>: presente em botões, banners e links.</li>
+              <li><strong>Links/CTA sem rótulo</strong>: itens clicáveis sem texto ou <code>aria-label</code>.</li>
+              <li><strong>ARIA inválido</strong>: ex. <code>aria-selected</code> indevido em sliders.</li>
+              <li><strong>Landmarks/cabeçalhos</strong>: ausência de <code>&lt;main&gt;</code>, duplicidade e ordem irregular de <code>h1–h6</code>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPIC 3: Métricas específicas -->
+    <section class=&quot;mb-4&quot;>
+      <h2 class=&quot;section-title&quot;>3) Métricas Específicas</h2>
+      <div class=&quot;row g-3&quot;>
+        <div class=&quot;col-12 col-lg-4&quot;>
+          <div class=&quot;card-soft p-3 h-100&quot;>
+            <h3 class=&quot;h6&quot;>Links sem texto</h3>
+            <div class=&quot;display-6 fw-bold&quot; style=&quot;color:var(--y-light-purple)&quot;>48</div>
+            <p class=&quot;subtle mb-2 small&quot;>Impacto direto em 2.4.4 (Propósito do link).</p>
+            <ul class=&quot;subtle mb-0 small&quot;>
+              <li>Adicionar rótulos visíveis ou <code>aria-label</code>.</li>
+              <li>Evitar ícones sem texto acessível.</li>
+            </ul>
+          </div>
+        </div>
+        <div class=&quot;col-12 col-lg-4&quot;>
+          <div class=&quot;card-soft p-3 h-100&quot;>
+            <h3 class=&quot;h6&quot;>ARIA inválido</h3>
+            <div class=&quot;display-6 fw-bold&quot; style=&quot;color:var(--y-light-purple)&quot;>6</div>
+            <p class=&quot;subtle mb-2 small&quot;>Ex.: controles do slider com <code>aria-selected</code>.</p>
+            <ul class=&quot;subtle mb-0 small&quot;>
+              <li>Remover atributos não permitidos.</li>
+              <li>Validar com axe/Accessibility Insights.</li>
+            </ul>
+          </div>
+        </div>
+        <div class=&quot;col-12 col-lg-4&quot;>
+          <div class=&quot;card-soft p-3 h-100&quot;>
+            <h3 class=&quot;h6&quot;>Landmarks com erro</h3>
+            <div class=&quot;display-6 fw-bold&quot; style=&quot;color:var(--y-light-purple)&quot;>12</div>
+            <p class=&quot;subtle mb-2 small&quot;>Sem <code>&lt;main&gt;</code> único ou rótulos duplicados.</p>
+            <ul class=&quot;subtle mb-0 small&quot;>
+              <li>Uma região <code>&lt;main&gt;</code> por página.</li>
+              <li><code>aria-label</code> únicos por landmark.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPIC 4: Roteiro de correção -->
+    <section class=&quot;mb-4&quot;>
+      <h2 class=&quot;section-title&quot;>4) Roteiro de Correção (Sprint-ready)</h2>
+      <div class=&quot;row g-3&quot;>
+        <div class=&quot;col-12 col-lg-6&quot;>
+          <div class=&quot;card-soft p-3 h-100&quot;>
+            <h3 class=&quot;h6&quot;>Prioridade imediata</h3>
+            <ol class=&quot;mb-0&quot;>
+              <li>Padronizar contraste (tokens) e revisar botões/links/banners.</li>
+              <li>Adicionar rótulos visíveis/ARIA a todos os CTAs sem texto.</li>
+              <li>Sanear atributos ARIA inválidos em sliders e navegações.</li>
+              <li>Definir <code>&lt;main&gt;</code> único e ajustar ordem de cabeçalhos.</li>
+            </ol>
+          </div>
+        </div>
+        <div class=&quot;col-12 col-lg-6&quot;>
+          <div class=&quot;card-soft p-3 h-100&quot;>
+            <h3 class=&quot;h6&quot;>Validação & governança</h3>
+            <ol class=&quot;mb-0&quot;>
+              <li>Executar varredura automatizada (CI) a cada build.</li>
+              <li>Checklist manual WCAG 2.2 AA por amostragem.</li>
+              <li>Quality gates para bloquear regressões.</li>
+              <li>Treinamento contínuo de dev/design.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPIC 5: Metodologia e Observações -->
+    <section class=&quot;mb-4&quot;>
+      <h2 class=&quot;section-title&quot;>5) Metodologia & Observações</h2>
+      <div class=&quot;card-soft p-3&quot;>
+        <p class=&quot;mb-1&quot;><strong>Fonte dos dados:</strong> Yaman - WCAG Automation.</p>
+        <p class=&quot;mb-1&quot;><strong>Notas:</strong> Indicadores com <span class=&quot;kpi-pill&quot;>Estimativa</span> dependem de validação manual (principalmente contraste e rotulagem em componentes dinâmicos).</p>
+        <p class=&quot;mb-0&quot;><strong>Critérios relevantes:</strong> 1.4.3 (Contraste), 2.4.4 (Propósito do link), 1.3.1 (Relações), 4.1.2 (Nome, Função e Valor).</p>
+      </div>
+    </section>
+
+    <footer class=&quot;mt-2&quot;>
+      <div class=&quot;brand-divider mb-2&quot;></div>
+      <p class=&quot;subtle small mb-0&quot;>Relatório pronto para impressão | Yaman Tecnologia © 2025</p>
+    </footer>
+  </div>
+
+  <script>
+    // Neutral/light palette for better print/readability
+    const ctx = document.getElementById('severityChart');
+    if (ctx) {
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Critical (5%)', 'Serious (60%)', 'Moderate (25%)', 'Minor (10%)'],
+          datasets: [{
+            data: [5, 60, 25, 10],
+            // neutral + brand-accent mix
+            backgroundColor: ['#9B9B9B', '#D6D6D6', '#63398E', '#DFE33D'],
+            borderColor: '#FFFFFF',
+            borderWidth: 2,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          plugins: {
+            legend: { position: 'bottom', labels: { color: '#333', font: { family: 'Inter' } } },
+            tooltip: { enabled: true }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>"></iframe>
+        </div>
+        <div class="tab-pane fade" id="report" role="tabpanel">
+          <iframe srcdoc="
+  <!DOCTYPE html>
+  <html lang=&quot;pt-BR&quot;>
+  <head>
+    <meta charset=&quot;UTF-8&quot;>
+    <title>Relatório de Acessibilidade (WCAG)</title>
+    <link href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot;>
+    <script src=&quot;https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js&quot;></script>
+    <style>
+      body { background-color: #f8f9fa; padding: 30px; }
+      h1 { margin-bottom: 20px; }
+      .big-number { font-size: 2rem; font-weight: 700; }
+      .card { border-radius: 1rem; }
+      .table thead th { background-color: #e9ecef; }
+    </style>
+  </head>
+  <body>
+    <div class=&quot;container-fluid&quot;>
+      <h1 class=&quot;mb-4&quot;>Relatório de Acessibilidade - WCAG 2.1 AA</h1>
+
+      <!-- Big Numbers -->
+      <div class=&quot;row mb-4 text-center&quot;>
+        <div class=&quot;col-md-4&quot;>
+          <div class=&quot;card shadow-sm p-3&quot;>
+            <div class=&quot;text-secondary&quot;>Páginas Auditadas</div>
+            <div class=&quot;big-number text-primary&quot;>13</div>
+          </div>
+        </div>
+        <div class=&quot;col-md-4&quot;>
+          <div class=&quot;card shadow-sm p-3&quot;>
+            <div class=&quot;text-secondary&quot;>Total de Violações</div>
+            <div class=&quot;big-number text-danger&quot;>7</div>
+          </div>
+        </div>
+        <div class=&quot;col-md-4&quot;>
+          <div class=&quot;card shadow-sm p-3&quot;>
+            <div class=&quot;text-secondary&quot;>Média por Página</div>
+            <div class=&quot;big-number text-warning&quot;>0.5</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráfico -->
+      <div class=&quot;card mb-4 shadow-sm&quot;>
+        <div class=&quot;card-header bg-primary text-white&quot;>Distribuição de Violações por Impacto</div>
+        <div class=&quot;card-body&quot;>
+          <div id=&quot;impactChart&quot; style=&quot;height:400px;&quot;></div>
+        </div>
+      </div>
+
+      <!-- Tabela Detalhada -->
+      <div class=&quot;card shadow-sm&quot;>
+        <div class=&quot;card-header bg-dark text-white&quot;>Detalhes por Página</div>
+        <div class=&quot;card-body&quot;>
+          <div class=&quot;table-responsive&quot;>
+            <table class=&quot;table table-striped align-middle&quot;>
+              <thead>
+                <tr>
+                  <th>Página</th>
+                  <th>Problemas</th>
+                  <th>Detalhes</th>
+                </tr>
+              </thead>
+              <tbody>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br&quot; target=&quot;_blank&quot;>https://yaman.com.br</a></td>
+      <td>0</td>
+      <td>
+        
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/#conteudo&quot; target=&quot;_blank&quot;>https://yaman.com.br/#conteudo</a></td>
+      <td>0</td>
+      <td>
+        
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/&quot; target=&quot;_blank&quot;>https://yaman.com.br/</a></td>
+      <td>0</td>
+      <td>
+        
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/sobre-nos&quot; target=&quot;_blank&quot;>https://yaman.com.br/sobre-nos</a></td>
+      <td>0</td>
+      <td>
+        
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/solucoes/talentos-sob-medida&quot; target=&quot;_blank&quot;>https://yaman.com.br/solucoes/talentos-sob-medida</a></td>
+      <td>0</td>
+      <td>
+        
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/solucoes/ciberseguranca&quot; target=&quot;_blank&quot;>https://yaman.com.br/solucoes/ciberseguranca</a></td>
+      <td>0</td>
+      <td>
+        
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/solucoes/ciclo-de-vida-de-desenvolvimento&quot; target=&quot;_blank&quot;>https://yaman.com.br/solucoes/ciclo-de-vida-de-desenvolvimento</a></td>
+      <td>1</td>
+      <td>
+        
+          <div class=&quot;mb-3&quot;>
+            <strong>heading-order</strong> - Heading levels should only increase by one
+            <br><em class=&quot;text-danger&quot;>moderate</em>
+            <ul>
+              <li><code>.items-start.border-neutral-400.flex-1:nth-child(1) > div > h4</code> - Fix any of the following:
+  Heading order invalid</li>
+            </ul>
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/solucoes/observabilidade&quot; target=&quot;_blank&quot;>https://yaman.com.br/solucoes/observabilidade</a></td>
+      <td>1</td>
+      <td>
+        
+          <div class=&quot;mb-3&quot;>
+            <strong>heading-order</strong> - Heading levels should only increase by one
+            <br><em class=&quot;text-danger&quot;>moderate</em>
+            <ul>
+              <li><code>h4</code> - Fix any of the following:
+  Heading order invalid</li>
+            </ul>
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/blog&quot; target=&quot;_blank&quot;>https://yaman.com.br/blog</a></td>
+      <td>1</td>
+      <td>
+        
+          <div class=&quot;mb-3&quot;>
+            <strong>label</strong> - Form elements must have labels
+            <br><em class=&quot;text-danger&quot;>critical</em>
+            <ul>
+              <li><code>select</code> - Fix any of the following:
+  aria-label attribute does not exist or is empty
+  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty
+  Form element does not have an implicit (wrapped) <label>
+  Form element does not have an explicit <label>
+  Element has no title attribute or the title attribute is empty</li>
+            </ul>
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/contato&quot; target=&quot;_blank&quot;>https://yaman.com.br/contato</a></td>
+      <td>2</td>
+      <td>
+        
+          <div class=&quot;mb-3&quot;>
+            <strong>color-contrast</strong> - Elements must have sufficient color contrast
+            <br><em class=&quot;text-danger&quot;>serious</em>
+            <ul>
+              <li><code>.LLfc0BvofSDtGzpg3bq3</code> - Fix any of the following:
+  Element has insufficient color contrast of 3.44 (foreground color: #556071, background color: #bdbec0, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1</li>
+            </ul>
+          </div>
+          <div class=&quot;mb-3&quot;>
+            <strong>region</strong> - All page content must be contained by landmarks
+            <br><em class=&quot;text-danger&quot;>moderate</em>
+            <ul>
+              <li><code>#message-bubbles > div</code> - Fix any of the following:
+  Some page content is not contained by landmarks</li>
+            </ul>
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/#contato&quot; target=&quot;_blank&quot;>https://yaman.com.br/#contato</a></td>
+      <td>0</td>
+      <td>
+        
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/politica-de-privacidade&quot; target=&quot;_blank&quot;>https://yaman.com.br/politica-de-privacidade</a></td>
+      <td>1</td>
+      <td>
+        
+          <div class=&quot;mb-3&quot;>
+            <strong>empty-heading</strong> - Headings must not be empty
+            <br><em class=&quot;text-danger&quot;>minor</em>
+            <ul>
+              <li><code>h2:nth-child(12)</code> - Fix any of the following:
+  Element does not have text that is visible to screen readers</li>
+            </ul>
+          </div>
+      </td>
+    </tr>
+    <tr>
+      <td><a href=&quot;https://yaman.com.br/#topo&quot; target=&quot;_blank&quot;>https://yaman.com.br/#topo</a></td>
+      <td>1</td>
+      <td>
+        
+          <div class=&quot;mb-3&quot;>
+            <strong>region</strong> - All page content must be contained by landmarks
+            <br><em class=&quot;text-danger&quot;>moderate</em>
+            <ul>
+              <li><code>#message-bubbles > div</code> - Fix any of the following:
+  Some page content is not contained by landmarks</li>
+            </ul>
+          </div>
+      </td>
+    </tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const chart = echarts.init(document.getElementById('impactChart'));
+      const option = {
+        tooltip: { trigger: 'item' },
+        legend: { top: '5%', left: 'center' },
+        series: [{
+          name: 'Impacto',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          itemStyle: { borderRadius: 10, borderColor: '#fff', borderWidth: 2 },
+          label: { show: false, position: 'center' },
+          emphasis: { label: { show: true, fontSize: 18, fontWeight: 'bold' }},
+          labelLine: { show: false },
+          data: [{&quot;name&quot;:&quot;moderate&quot;,&quot;value&quot;:4},{&quot;name&quot;:&quot;critical&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;serious&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;minor&quot;,&quot;value&quot;:1}]
+        }]
+      };
+      chart.setOption(option);
+    </script>
+  </body>
+  </html>"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+  </html>

@@ -1,0 +1,36 @@
+# Dependências
+node_modules/
+package-lock.json
+
+# Logs e arquivos temporários
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Saídas e relatórios gerados
+wcag-report.html
+urls-discovered.txt
+
+# Arquivos de cache ou build
+.cache/
+dist/
+tmp/
+*.tmp
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs / Editores
+.vscode/
+.idea/
+*.iml
+
+# Arquivos do PowerShell ou scripts locais
+*.ps1
+*.bat
+
+# Ambiente local
+.env
+.env.*
