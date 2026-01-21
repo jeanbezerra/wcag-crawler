@@ -46,8 +46,11 @@ jobs:
           cp -f *.txt artifacts/ 2>/dev/null || true
           cp -f *.json artifacts/ 2>/dev/null || true
 
-      - name: Upload results
+      - name: Upload WCAG results
         uses: actions/upload-artifact@v4
         with:
           name: wcag-results
-          path: artifact
+          path: |
+            *.html
+            *.txt
+            *.json
