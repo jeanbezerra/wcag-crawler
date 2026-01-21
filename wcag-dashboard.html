@@ -331,7 +331,7 @@
         <div class=&quot;col-md-4&quot;>
           <div class=&quot;card shadow-sm p-3&quot;>
             <div class=&quot;text-secondary&quot;>Total de Violações</div>
-            <div class=&quot;big-number text-danger&quot;>7</div>
+            <div class=&quot;big-number text-danger&quot;>6</div>
           </div>
         </div>
         <div class=&quot;col-md-4&quot;>
@@ -394,9 +394,25 @@
     </tr>
     <tr>
       <td><a href=&quot;https://yaman.com.br/solucoes/talentos-sob-medida&quot; target=&quot;_blank&quot;>https://yaman.com.br/solucoes/talentos-sob-medida</a></td>
-      <td>0</td>
+      <td>2</td>
       <td>
         
+          <div class=&quot;mb-3&quot;>
+            <strong>color-contrast</strong> - Elements must have sufficient color contrast
+            <br><em class=&quot;text-danger&quot;>serious</em>
+            <ul>
+              <li><code>.LLfc0BvofSDtGzpg3bq3</code> - Fix any of the following:
+  Element has insufficient color contrast of 3.44 (foreground color: #556071, background color: #bdbec0, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1</li>
+            </ul>
+          </div>
+          <div class=&quot;mb-3&quot;>
+            <strong>region</strong> - All page content must be contained by landmarks
+            <br><em class=&quot;text-danger&quot;>moderate</em>
+            <ul>
+              <li><code>#message-bubbles > div</code> - Fix any of the following:
+  Some page content is not contained by landmarks</li>
+            </ul>
+          </div>
       </td>
     </tr>
     <tr>
@@ -457,25 +473,9 @@
     </tr>
     <tr>
       <td><a href=&quot;https://yaman.com.br/contato&quot; target=&quot;_blank&quot;>https://yaman.com.br/contato</a></td>
-      <td>2</td>
+      <td>0</td>
       <td>
         
-          <div class=&quot;mb-3&quot;>
-            <strong>color-contrast</strong> - Elements must have sufficient color contrast
-            <br><em class=&quot;text-danger&quot;>serious</em>
-            <ul>
-              <li><code>.LLfc0BvofSDtGzpg3bq3</code> - Fix any of the following:
-  Element has insufficient color contrast of 3.44 (foreground color: #556071, background color: #bdbec0, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1</li>
-            </ul>
-          </div>
-          <div class=&quot;mb-3&quot;>
-            <strong>region</strong> - All page content must be contained by landmarks
-            <br><em class=&quot;text-danger&quot;>moderate</em>
-            <ul>
-              <li><code>#message-bubbles > div</code> - Fix any of the following:
-  Some page content is not contained by landmarks</li>
-            </ul>
-          </div>
       </td>
     </tr>
     <tr>
@@ -502,17 +502,9 @@
     </tr>
     <tr>
       <td><a href=&quot;https://yaman.com.br/#topo&quot; target=&quot;_blank&quot;>https://yaman.com.br/#topo</a></td>
-      <td>1</td>
+      <td>0</td>
       <td>
         
-          <div class=&quot;mb-3&quot;>
-            <strong>region</strong> - All page content must be contained by landmarks
-            <br><em class=&quot;text-danger&quot;>moderate</em>
-            <ul>
-              <li><code>#message-bubbles > div</code> - Fix any of the following:
-  Some page content is not contained by landmarks</li>
-            </ul>
-          </div>
       </td>
     </tr></tbody>
             </table>
@@ -535,7 +527,7 @@
           label: { show: false, position: 'center' },
           emphasis: { label: { show: true, fontSize: 18, fontWeight: 'bold' }},
           labelLine: { show: false },
-          data: [{&quot;name&quot;:&quot;moderate&quot;,&quot;value&quot;:4},{&quot;name&quot;:&quot;critical&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;serious&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;minor&quot;,&quot;value&quot;:1}]
+          data: [{&quot;name&quot;:&quot;serious&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;moderate&quot;,&quot;value&quot;:3},{&quot;name&quot;:&quot;critical&quot;,&quot;value&quot;:1},{&quot;name&quot;:&quot;minor&quot;,&quot;value&quot;:1}]
         }]
       };
       chart.setOption(option);
